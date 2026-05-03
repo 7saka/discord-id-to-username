@@ -1,0 +1,14 @@
+name = "discord-id-to-username"
+main = ".open-next/worker.js"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Set DISCORD_BOT_TOKEN via `wrangler secret put DISCORD_BOT_TOKEN`
+
+[[routes]]
+pattern = "id.saka.ac/*"
+zone_name = "saka.ac"
+
+[build]
+command = "npm run build:worker"
