@@ -19,8 +19,10 @@ export async function GET(
 
   const botToken = process.env.DISCORD_BOT_TOKEN;
   if (!botToken) {
+    // Don't reveal the reason — log internally only
+    console.error("[discord-lookup] DISCORD_BOT_TOKEN is not set");
     return NextResponse.json(
-      { error: "Server misconfiguration: missing bot token." },
+      { error: "Internal server error." },
       { status: 500 }
     );
   }
@@ -30,8 +32,15 @@ export async function GET(
     const info = enrichUser(user);
     return NextResponse.json(info);
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown error";
-    const status = message.toLowerCase().includes("unknown user") ? 404 : 502;
-    return NextResponse.json({ error: message }, { status });
+    const message = err instanceof Error ? err.message : "";
+    // Log full error server-side, return safe message to client
+    console.error(`[discord-lookup] id=${id} error=${message}`);
+    if (message.toLowerCase().includes("unknown user")) {
+      return NextResponse.json({ error: "User not found." }, { status: 404 });
+    }
+    return NextResponse.json(
+      { error: "Failed to fetch user from Discord." },
+      { status: 502 }
+    );
   }
 }

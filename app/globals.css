@@ -1,26 +1,60 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+* { box-sizing: border-box; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: #030712;
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+/* ── Keyframes ─────────────────────────────────────────── */
+@keyframes card-appear {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Input focus ───────────────────────────────────────── */
+.discord-input {
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+.discord-input:focus {
+  outline: none;
+  border-color: rgba(124,58,237,0.58) !important;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.16);
+  background: rgba(2,6,23,0.88) !important;
+}
+.discord-input::placeholder { color: #334155; }
+
+/* ── Lookup button ─────────────────────────────────────── */
+.discord-btn {
+  transition: background 180ms ease, border-color 180ms ease, opacity 180ms ease;
+}
+.discord-btn:hover:not(:disabled) {
+  background: rgba(124,58,237,0.32) !important;
+  border-color: rgba(124,58,237,0.6) !important;
+}
+
+/* ── Link pills ────────────────────────────────────────── */
+.discord-link {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #a78bfa;
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(124,58,237,0.24);
+  background: rgba(124,58,237,0.10);
+  transition: background 180ms ease, border-color 180ms ease;
+}
+.discord-link:hover {
+  background: rgba(124,58,237,0.22);
+  border-color: rgba(124,58,237,0.44);
 }
