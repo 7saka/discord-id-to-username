@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 
 const nextConfig: NextConfig = {
-  // Required for Cloudflare Workers edge runtime
   images: {
     remotePatterns: [
       {
@@ -10,10 +10,11 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
-    // Disable Next.js image optimization — handled by Cloudflare
     unoptimized: true,
   },
 };
+
+initOpenNextCloudflareForDev();
 
 export default nextConfig;
 

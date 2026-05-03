@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { fetchDiscordUser, enrichUser } from "@/lib/discord";
 
-export const runtime = "edge";
-
 // Basic snowflake validation: 17–19 digit numeric string
 const SNOWFLAKE_RE = /^\d{17,19}$/;
 

@@ -3,6 +3,7 @@
 # Secrets
 .env.local
 .env.*.local
+.dev.vars
 
 # Cloudflare build output
 .open-next/
