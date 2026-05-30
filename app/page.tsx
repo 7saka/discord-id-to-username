@@ -364,7 +364,7 @@ export default function Home() {
                   value={inputId}
                   onChange={(e) => setInputId(e.target.value)}
                   placeholder="Discord User ID (e.g. 123456789012345678)"
-                  pattern="\\d{17,19}"
+                  pattern="\d{17,19}"
                   title="17-19 digit Discord snowflake ID"
                   className="discord-input"
                   style={{
@@ -387,7 +387,7 @@ export default function Home() {
                     value={guildId}
                     onChange={(e) => setGuildId(e.target.value)}
                     placeholder="Guild ID"
-                    pattern="\\d{17,19}"
+                    pattern="\d{17,19}"
                     title="17-19 digit Discord snowflake ID"
                     className="discord-input"
                     style={{
@@ -408,7 +408,7 @@ export default function Home() {
                     value={roleId}
                     onChange={(e) => setRoleId(e.target.value)}
                     placeholder="Role ID"
-                    pattern="\\d{17,19}"
+                    pattern="\d{17,19}"
                     title="17-19 digit Discord snowflake ID"
                     className="discord-input"
                     style={{
