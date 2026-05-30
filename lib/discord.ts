@@ -83,11 +83,133 @@ export const PREMIUM_TYPES: Record<number, string> = {
   3: "Nitro Basic",
 };
 
+// Guild role permissions bit positions
+export const ROLE_PERMISSIONS: Record<string, bigint> = {
+  CREATE_INSTANT_INVITE: 1n << 0n,
+  KICK_MEMBERS: 1n << 1n,
+  BAN_MEMBERS: 1n << 2n,
+  ADMINISTRATOR: 1n << 3n,
+  MANAGE_CHANNELS: 1n << 4n,
+  MANAGE_GUILD: 1n << 5n,
+  ADD_REACTIONS: 1n << 6n,
+  VIEW_AUDIT_LOG: 1n << 7n,
+  PRIORITY_SPEAKER: 1n << 8n,
+  STREAM: 1n << 9n,
+  VIEW_CHANNEL: 1n << 10n,
+  SEND_MESSAGES: 1n << 11n,
+  SEND_TTS_MESSAGES: 1n << 12n,
+  MANAGE_MESSAGES: 1n << 13n,
+  EMBED_LINKS: 1n << 14n,
+  ATTACH_FILES: 1n << 15n,
+  READ_MESSAGE_HISTORY: 1n << 16n,
+  MENTION_EVERYONE: 1n << 17n,
+  USE_EXTERNAL_EMOJIS: 1n << 18n,
+  VIEW_GUILD_INSIGHTS: 1n << 19n,
+  CONNECT: 1n << 20n,
+  SPEAK: 1n << 21n,
+  MUTE_MEMBERS: 1n << 22n,
+  DEAFEN_MEMBERS: 1n << 23n,
+  MOVE_MEMBERS: 1n << 24n,
+  USE_VAD: 1n << 25n,
+  CHANGE_NICKNAME: 1n << 26n,
+  MANAGE_NICKNAMES: 1n << 27n,
+  MANAGE_ROLES: 1n << 28n,
+  MANAGE_WEBHOOKS: 1n << 29n,
+  MANAGE_GUILD_EXPRESSIONS: 1n << 30n,
+  USE_APPLICATION_COMMANDS: 1n << 31n,
+  REQUEST_TO_SPEAK: 1n << 32n,
+  MANAGE_EVENTS: 1n << 33n,
+  MANAGE_THREADS: 1n << 34n,
+  CREATE_PUBLIC_THREADS: 1n << 35n,
+  CREATE_PRIVATE_THREADS: 1n << 36n,
+  USE_EXTERNAL_STICKERS: 1n << 37n,
+  SEND_MESSAGES_IN_THREADS: 1n << 38n,
+  USE_EMBEDDED_ACTIVITIES: 1n << 39n,
+  MODERATE_MEMBERS: 1n << 40n,
+  VIEW_CREATOR_MONETIZATION_ANALYTICS: 1n << 41n,
+  USE_SOUNDBOARD: 1n << 42n,
+  CREATE_GUILD_EXPRESSIONS: 1n << 43n,
+  CREATE_EVENTS: 1n << 44n,
+  USE_EXTERNAL_SOUNDS: 1n << 45n,
+  SEND_VOICE_MESSAGES: 1n << 46n,
+  SEND_POLLS: 1n << 49n,
+  USE_EXTERNAL_APPS: 1n << 50n,
+};
+
+export const ROLE_PERMISSION_LABELS: Record<string, string> = {
+  CREATE_INSTANT_INVITE: "Create Invite",
+  KICK_MEMBERS: "Kick Members",
+  BAN_MEMBERS: "Ban Members",
+  ADMINISTRATOR: "Administrator",
+  MANAGE_CHANNELS: "Manage Channels",
+  MANAGE_GUILD: "Manage Server",
+  ADD_REACTIONS: "Add Reactions",
+  VIEW_AUDIT_LOG: "View Audit Log",
+  PRIORITY_SPEAKER: "Priority Speaker",
+  STREAM: "Video",
+  VIEW_CHANNEL: "View Channels",
+  SEND_MESSAGES: "Send Messages",
+  SEND_TTS_MESSAGES: "Send TTS Messages",
+  MANAGE_MESSAGES: "Manage Messages",
+  EMBED_LINKS: "Embed Links",
+  ATTACH_FILES: "Attach Files",
+  READ_MESSAGE_HISTORY: "Read Message History",
+  MENTION_EVERYONE: "Mention Everyone",
+  USE_EXTERNAL_EMOJIS: "Use External Emojis",
+  VIEW_GUILD_INSIGHTS: "View Server Insights",
+  CONNECT: "Connect",
+  SPEAK: "Speak",
+  MUTE_MEMBERS: "Mute Members",
+  DEAFEN_MEMBERS: "Deafen Members",
+  MOVE_MEMBERS: "Move Members",
+  USE_VAD: "Use Voice Activity",
+  CHANGE_NICKNAME: "Change Nickname",
+  MANAGE_NICKNAMES: "Manage Nicknames",
+  MANAGE_ROLES: "Manage Roles",
+  MANAGE_WEBHOOKS: "Manage Webhooks",
+  MANAGE_GUILD_EXPRESSIONS: "Manage Expressions",
+  USE_APPLICATION_COMMANDS: "Use Application Commands",
+  REQUEST_TO_SPEAK: "Request to Speak",
+  MANAGE_EVENTS: "Manage Events",
+  MANAGE_THREADS: "Manage Threads",
+  CREATE_PUBLIC_THREADS: "Create Public Threads",
+  CREATE_PRIVATE_THREADS: "Create Private Threads",
+  USE_EXTERNAL_STICKERS: "Use External Stickers",
+  SEND_MESSAGES_IN_THREADS: "Send Messages in Threads",
+  USE_EMBEDDED_ACTIVITIES: "Use Activities",
+  MODERATE_MEMBERS: "Moderate Members",
+  VIEW_CREATOR_MONETIZATION_ANALYTICS:
+    "View Creator Monetization Analytics",
+  USE_SOUNDBOARD: "Use Soundboard",
+  CREATE_GUILD_EXPRESSIONS: "Create Expressions",
+  CREATE_EVENTS: "Create Events",
+  USE_EXTERNAL_SOUNDS: "Use External Sounds",
+  SEND_VOICE_MESSAGES: "Send Voice Messages",
+  SEND_POLLS: "Send Polls",
+  USE_EXTERNAL_APPS: "Use External Apps",
+};
+
 export function parseFlags(flags: number | null | undefined): string[] {
   if (!flags) return [];
   return Object.entries(PUBLIC_FLAGS)
     .filter(([, bit]) => (flags & bit) !== 0)
     .map(([key]) => FLAG_LABELS[key] ?? key);
+}
+
+function toHexColor(value: number | null | undefined): string | null {
+  if (typeof value !== "number" || value <= 0) return null;
+  return `#${value.toString(16).padStart(6, "0")}`;
+}
+
+export function parseRolePermissions(
+  permissions: string | null | undefined
+): string[] {
+  if (!permissions) return [];
+
+  const parsed = BigInt(permissions);
+  return Object.entries(ROLE_PERMISSIONS)
+    .filter(([, bit]) => (parsed & bit) === bit)
+    .map(([key]) => ROLE_PERMISSION_LABELS[key] ?? key);
 }
 
 export interface DiscordUser {
@@ -120,6 +242,41 @@ export interface DiscordUserInfo {
   isSystem: boolean;
   isDeletedLikely: boolean;
   accentColorHex: string | null;
+}
+
+export interface DiscordRoleColors {
+  primary_color?: number | null;
+  secondary_color?: number | null;
+  tertiary_color?: number | null;
+  primaryColor?: number | null;
+  secondaryColor?: number | null;
+  tertiaryColor?: number | null;
+}
+
+export interface DiscordRole {
+  id: string;
+  name: string;
+  color: number;
+  hoist: boolean;
+  icon: string | null;
+  unicode_emoji: string | null;
+  position: number;
+  permissions: string;
+  managed: boolean;
+  mentionable: boolean;
+  tags?: Record<string, string | null>;
+  colors?: DiscordRoleColors | null;
+}
+
+export interface DiscordRoleInfo {
+  raw: DiscordRole;
+  createdAt: Date;
+  permissions: string[];
+  permissionsRaw: string;
+  colorHex: string | null;
+  primaryColorHex: string | null;
+  secondaryColorHex: string | null;
+  tertiaryColorHex: string | null;
 }
 
 export function enrichUser(user: DiscordUser): DiscordUserInfo {
@@ -161,6 +318,36 @@ export function enrichUser(user: DiscordUser): DiscordUserInfo {
   };
 }
 
+function extractEnhancedRoleColors(role: DiscordRole): {
+  primaryColorHex: string | null;
+  secondaryColorHex: string | null;
+  tertiaryColorHex: string | null;
+} {
+  const colors = role.colors;
+  const primary = colors?.primary_color ?? colors?.primaryColor ?? null;
+  const secondary = colors?.secondary_color ?? colors?.secondaryColor ?? null;
+  const tertiary = colors?.tertiary_color ?? colors?.tertiaryColor ?? null;
+
+  return {
+    primaryColorHex: toHexColor(primary),
+    secondaryColorHex: toHexColor(secondary),
+    tertiaryColorHex: toHexColor(tertiary),
+  };
+}
+
+export function enrichRole(role: DiscordRole): DiscordRoleInfo {
+  const enhancedColors = extractEnhancedRoleColors(role);
+
+  return {
+    raw: role,
+    createdAt: snowflakeToTimestamp(role.id),
+    permissions: parseRolePermissions(role.permissions),
+    permissionsRaw: role.permissions,
+    colorHex: toHexColor(role.color),
+    ...enhancedColors,
+  };
+}
+
 export async function fetchDiscordUser(
   id: string,
   botToken: string
@@ -179,4 +366,25 @@ export async function fetchDiscordUser(
   }
 
   return res.json() as Promise<DiscordUser>;
+}
+
+export async function fetchDiscordRole(
+  guildId: string,
+  roleId: string,
+  botToken: string
+): Promise<DiscordRole> {
+  const res = await fetch(`${DISCORD_API_BASE}/guilds/${guildId}/roles/${roleId}`, {
+    headers: {
+      Authorization: `Bot ${botToken}`,
+    },
+  });
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const msg =
+      (body as { message?: string }).message ?? `HTTP ${res.status}`;
+    throw new Error(msg);
+  }
+
+  return res.json() as Promise<DiscordRole>;
 }

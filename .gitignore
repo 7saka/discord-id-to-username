@@ -7,6 +7,7 @@
 
 # Cloudflare build output
 .open-next/
+.wrangler/
 
 # dependencies
 /node_modules

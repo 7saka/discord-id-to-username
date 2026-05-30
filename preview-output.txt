@@ -1,0 +1,30 @@
+
+ÔöîÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÉ
+Ôöé OpenNext ÔÇö Cloudflare preview Ôöé
+ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÿ
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+Using secrets defined in .dev.vars
+Incremental cache does not need populating
+Tag cache does not need populating
+
+ Ôøà´©Å wrangler 4.87.0
+ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
+Using secrets defined in .dev.vars
+Your Worker has access to the following bindings:
+Binding                                                 Resource                  Mode
+env.WORKER_SELF_REFERENCE (discord-id-to-username)      Worker                    local [connected]
+env.ASSETS                                              Assets                    local
+env.NEXTJS_ENV ("(hidden)")                             Environment Variable      local
+env.DISCORD_BOT_TOKEN ("(hidden)")                      Environment Variable      local
+
+
+Service bindings, Durable Object bindings, and Tail consumers connect to other Wrangler or Vite dev processes running locally, with their connection status indicated by [connected] or [not connected]. For more details, refer to https://developers.cloudflare.com/workers/runtime-apis/bindings/service-bindings/#local-development
+
+ÔÄö Starting local server...
+[wrangler:info] Ô£¿ Parsed 1 valid header rule.
+[wrangler:info] Ready on http://127.0.0.1:8788
+[wrangler:info] GET / 500 Internal Server Error (174ms)
+[wrangler:info] GET / 500 Internal Server Error (9ms)
